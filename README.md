@@ -150,7 +150,7 @@ Setting in "Advanced"
 The data in Dataset_Sample.csv has been transformed into the different tables by their thread Id.
 <ul>
   Before:<img src="extension-src/documentation/Deployment/Before_csv.png" width="40%" height="40%">
-  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="30%" height="5%">
+  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="40%" height="15%">
 </ul>
 
 The data is stored in the following structure. 
@@ -168,10 +168,11 @@ How to use example table to highlight the sentence on stack overflow
   <li>opening a new thread which is no matched table in database</li>
   <li>inserting the sentence which you want to highlight in example table, excute it</li>
   <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="100%">
+  
   <li>go back to the thread page, the selected content will be highlighted</li>
 
-  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="40%" height="400">
-  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="40%" height="400">
+  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="40%" height="200">
+  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="40%" height="200">
 </ul>
 
 
