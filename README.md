@@ -36,10 +36,8 @@ Cons: CSV on computer may become outdated if a newer version is released
 
 
 ### API
-Choosing “API” means that the CSV will be retrieved from a web server, and will thus return the latest version of the CSV. However, the user will have to have Node.JS, and will have to run the server.js file on their computer in order to get the CSV from a local host (for now…)
+Choosing “API" means that the backend will filter the sentences that need to be highlighted from Stack Overflow page, and the CSV will be retrieved from a web server (Heroku server for now...). 
 
-Pros: CSV always up to date
-Cons: requires Node.js
 
 #### Installation Instructions (if you choose API)
 <ul>
@@ -47,10 +45,6 @@ Cons: requires Node.js
 <li>Run node so-tags.js file in the RESTapi-src folder</li> 
 </ul>
 
-## Dependencies
-<ul> 
-  <li> node.js</li>
-</ul>
 
 ## Description of Files
 <table>
@@ -91,12 +85,114 @@ After:
 
 Try it yourself <a href = "https://stackoverflow.com/questions/104850/test-if-string-is-a-guid-without-throwing-exceptions">here</a>!
 
-## Next Steps
-The current next steps (as of August 2020…) will be:
+## Deploy Heroku on local machine (for the current progress)
+For now, it is a personal account
+
 <ul>
-### Finding more answers to put tags on:
-  <li>This will start in September of 2020, and is the main “research” part of this project</li>
+Install the Heroku Command Line Interface (CLI)
+  <li>Go https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up to download CLI</li>
 </ul>
+
+<ul>
+Install nodejs, npm and git
+  <li>Nodejs && Npm: https://nodejs.org/en/download/ </li>
+  <li>Git: https://git-scm.com/downloads </li>
+</ul>
+
+<ul>
+Clone the repository from git
+  <li>Use Git to clone infinite-inlet-10555's source code to the local machine. </li>
+  <li>$ heroku git:clone -a infinite-inlet-10555</li>
+  <li>$ cd infinite-inlet-10555</li>
+</ul>
+
+<ul>
+Change the server configuration
+  <li>"index.js" is the current code of server in Heroku. It works to connect the database ----“Heroku Postgres” to fetch the data and write all of them on Heroku web page. </li>
+</ul>
+
+<ul>
+Update the git
+  <li>After making any changes on the server side, using the following commands to update the git</li>
+  <li>$ git add .</li>
+  <li>$ git commit -m "My first commit"</li>
+</ul>
+
+<ul>
+Clone the repository from git
+  <li>Use Git to clone infinite-inlet-10555's source code to the local machine. </li>
+  <li>$ heroku git:clone -a infinite-inlet-10555</li>
+  <li>$ cd infinite-inlet-10555</li>
+</ul>
+
+## Deploy “Heroku Postgres” on local machine (for the current progress)
+
+<ul>
+Install postgresql, pgAdmin is a GUI for postgresql databases
+  <li>Go https://www.postgresql.org/download/ </li>
+</ul>
+
+<ul>
+right-click the Servers, create--->server
+  <img src="extension-src/documentation/Deployment/create_server.png" width="40%" height="40%">
+</ul>
+
+<ul>
+connect to the Heroku
+  <img src="extension-src/documentation/Deployment/connect_to_Heroku" width="40%" height="40%">
+  <li>hostname/address: ec2-204-236-228-169.compute-1.amazonaws.com</li>
+  <li>Port: 5432</li>
+  <li>Maintenance database: d46fvet7vs95l7</li>
+  <li>Username: opylmcuyrcwsmj</li>
+</ul>
+
+<ul>
+setting in "Advanced"
+  <img src="extension-src/documentation/Deployment/Advanced.png" width="40%" height="40%">
+  <li>DB restriction: d46fvet7vs95l7</li>
+</ul>
+
+## The structure of “Heroku Postgres”(for now)
+
+Tables in the database
+<ul>
+  The data in Dataset_Sample.csv has been transformed into the different tables by their thread Id.
+
+  Before:<img src="extension-src/documentation/Deployment/Before_csv.png" width="40%" height="40%">
+  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="40%" height="40%">
+</ul>
+
+Data structure in each table
+<ul>
+  The data is stored in the following structure. 
+  <img src="extension-src/documentation/data_structure.png" width="40%" height="40%">
+</ul>
+
+“example” table can be used to retrieve results from backend. But for now, it need to be manually changed. The program will keep listen on the page of this table. (https://infinite-inlet-10555.herokuapp.com/test) When the new data is inserted in this table, the corresponding page will show them automatically, also the frontend will get the data. 
+
+**How to use example table to highlight the sentence on stack overflow
+<ul>
+  <li>opening a new thread which is no matched table in database</li>
+  <li>inserting the sentence which you want to highlight in example table, excute it</li>
+  <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="40%">
+  <li>go back to the thread page, the selected content will be highlighted</li>
+
+  Before:<img src="extension-src/documentation/Deployment/before_highlight.png" width="40%" height="40%">
+  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="40%" height="40%">
+</ul>
+
+
+## Login to the heroku
+Go to https://dashboard.heroku.com/apps
+<li>Username: demonlitioncap@gmail.com</li>
+<li>Passwords: qweasd665</li>
+
+## Deploy Heroku on local machine (from the begining)
+This is the guideline about how to deploy on local machine for a new account. Go to "https://devcenter.heroku.com/articles/getting-started-with-nodejs"
+
+## Next Steps
+The current next steps (as of December 2020…) will be:
+
 <ul>
 ### Installing the extension directly on the Chrome Marketplace:
 <li>There is an “Issue” on Github with all the relevant information pertaining to putting the extension on the Chrome marketplace. </li>
