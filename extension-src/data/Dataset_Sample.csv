@@ -1,0 +1,37 @@
+ThreadID,AnswerID,Sentence Text,Tags
+1348080,1348092,The easy way:,easy
+1348080,1348193,the beauty of this approach is that you can easily refactor it into an exception generator:,easily refactor
+1348080,39482644,So simple and easy,simple and easy
+1348080,25347492,This soln may sound absurd and incomplete but I can guarantee this is the fastest method,fastest
+4055205,24362047,In VB.NET use,VB.NET
+2835092,2835135,"However, you can make your system a little bit more reusable by creating a class to represent the input options and then overloading operator>> so that it uses getline and parses the string.",reusable
+1891189,1891218,One real easy way would be to give:,easy
+1388608,1388911,IncrediBuild (distributed build system for VC++) besides the time-saving has an additional helpful function,IncrediBuild
+1294687,34614856,This should work from IE7 to IE11.,IE7 to IE11
+195886,195952,"Yes I know it uses DAV and it's therefore not really just a plain old webserver, but from the point of view of deploying to a production machine, the process is 'I download some files using http from http://blah', so it might as well be one.",DAV
+104850,287877,COM Intertop (Fastest) Answer:,fastest
+104850,287877,"If you need to check if a string is a guid, and you care about performance, use COM Interop.",performance
+104850,1983992,Once .net 4.0 is available you can use Guid.TryParse().,.net 4.0
+104850,6533282,In .NET 4.0 you can write as following:,.net 4.0
+104850,137829,"Starting with .NET 4.0, there is a new set of methods available for Guid:",.net 4.0
+104850,1185400,I changed your code a little to get better performance while still keeping it simple.,"performance, simple"
+9314238,9314582,There is a CSS3 property: word-wrap: break-word;...ofc that requires the browser to have CSS3 support.,CSS3
+7355095,22624119,Super simple answer - solved!,super simple
+8658211,8658460,is the easiest solution.,easiest
+16617888,16618055,"I think the easiest way to do this is install jQuery and use the find method then serialize the whole thing and send it using a jQuery post, get, or ajax method.","jquery,easiest"
+4652618,4652645,Use Javascript's native functions to search strings for substrings:,javascript's native function
+6870106,6870189,"I think the correct python way would be to do it the easiest way, removing all unnecessary code.",easiest
+6870106,6870453,using init is an understandable way (for other programmer) of creating attribute.,understandable
+7030575,7031769,"BTW, no plugins needed for this approach...",no plugins
+7030575,7030629,plugin with the similar (same?) capability:,plugin
+7030575,7030845,No plugins needed.,no plugins
+9062550,9062735,OK ulong in C# is a 64-bit integer (on Windows 7) and I found if I changed all the ulong's to Int32's it worked for a DLL function I constructed with the same signature.,windows 7
+9314238,9355726,My solution is a bit ugly.,ugly
+9314238,9315221,Its a bit crowbar i hope someone else can improve it.,crowbar
+10089211,10089933,"Best practice here would be alloc/init for DownloadAndParseBook, retain done by the owner, all your download/parse logic, then sending a callback to the owner that all the operations are done (through a delegate for example), at which point, the ower sends a release message to your object.",best practice
+13642538,13642614,Or ASP style syntax,ASP
+13642538,13642614,Although ugly it might solve your problem,ugly
+15421234,43525256,"If you run out of options trying solutions with HTTP Header, try adding the following key to Internet Explorer in Windows Registry if you are seeing 'No such Window exception' preeceded by 500 Internal Server Error.",internet explorer
+15907913,15908118,Short one liner that still keeps the FS usable:,one liner
+15907913,15908099,this short one-liner should work for you,one liner
+16617888,16866556,used this jquery and jquery form js,jquery

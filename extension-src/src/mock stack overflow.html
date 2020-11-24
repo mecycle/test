@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+
+
+<html itemscope itemtype="http://schema.org/QAPage" class="html__responsive">
+
+<head>
+
+    <title>How do I use arrays in C++? - Stack Overflow</title>
+
+</head>
+<body>                                
+<a name="7439261"></a>
+<div id="answer-7439261" class="answer" data-answerid="7439261"  itemprop="suggestedAnswer" itemscope itemtype="http://schema.org/Answer">
+<div class="post-layout">
+
+</div>
+
+    </div>
+
+    
+
+<div class="answercell post-layout--right">
+
+<div class="s-prose js-post-body" itemprop="text">
+<h1>5. Common pitfalls when using arrays.</h1>
+
+<h2>5.1 Pitfall: Trusting type-unsafe linking.</h2>
+
+<p>OK, you&rsquo;ve been told, or have found out yourself, that globals (namespace
+scope variables that can be accessed outside the translation unit) are
+Evil&trade;. But did you know how truly Evil&trade; they are? Consider the
+program below, consisting of two files [main.cpp] and [numbers.cpp]:</p>
+
+<pre><code>// [main.cpp]
+#include &lt;iostream&gt;
+
+extern int* numbers;
+
+int main()
+{
+using namespace std;
+for( int i = 0;  i &lt; 42;  ++i )
+{
+    cout &lt;&lt; (i &gt; 0? ", " : "") &lt;&lt; numbers[i];
+}
+cout &lt;&lt; endl;
+}
+</code></pre>
+
+<p></p>
+
+<pre><code>// [numbers.cpp]
+int numbers[42] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+</code></pre>
+
+<p>In Windows 7 this compiles and links fine with both MinGW g++ 4.4.1 and
+Visual C++ 10.0.</p>
+
+<p>Since the types don't match, the program crashes when you run it.</p>
+
+<p><img src="https://i.stack.imgur.com/v7KJF.png" alt="The Windows 7 crash dialog"></p>
+
+<p>In-the-formal explanation: the program has Undefined Behavior (UB), and instead
+of crashing it can therefore just hang, or perhaps do nothing, or it
+can send threating e-mails to the presidents of the USA, Russia, India,
+China and Switzerland, and make Nasal Daemons fly out of your nose.</p>
+
+<p>In-practice explanation: in <code>main.cpp</code> the array is treated as a pointer, placed
+at the same address as the array. For 32-bit executable this means that the first
+<code>int</code> value in the array, is treated as a pointer. I.e., in <code>main.cpp</code> the
+<code>numbers</code> variable contains, or appears to contain, <code>(int*)1</code>. This causes the
+program to access memory down at very bottom of the address space, which is
+conventionally reserved and trap-causing. Result: you get a crash.</p>
+
+<p>The compilers are fully within their rights to not diagnose this error,
+because C++11 §3.5/10 says, about the requirement of compatible types
+for the declarations,</p>
+
+<blockquote>
+<p><strong>[N3290 §3.5/10]</strong><br>
+A violation of this rule on type identity does not require a diagnostic.</p>
+</blockquote>
+
+<p>The same paragraph details the variation that is allowed:</p>
+
+<blockquote>
+<p>&hellip; declarations for an array object can specify array types that
+differ by the presence or absence of a major array bound (8.3.4).</p>
+</blockquote>
+
+<p>This allowed variation does not include declaring a name as an array in one
+translation unit, and as a pointer in another translation unit.    </p>
+
+<h2>5.2 Pitfall: Doing premature optimization (<code>memset</code> &amp; friends).</h2>
+
+<p><em>Not written yet</em></p>
+
+<h2>5.3 Pitfall: Using the C idiom to get number of elements.</h2>
+
+<p>With deep C experience it&rsquo;s natural to write &hellip;</p>
+
+<pre><code>#define N_ITEMS( array )   (sizeof( array )/sizeof( array[0] ))
+</code></pre>
+
+<p>Since an <code>array</code> decays to pointer to first element where needed, the
+expression <code>sizeof(a)/sizeof(a[0])</code> can also be written as
+<code>sizeof(a)/sizeof(*a)</code>. It means the same, and no matter how it&rsquo;s
+written it is the <strong>C idiom</strong> for finding the number elements of array.</p>
+
+<p>Main pitfall: the C idiom is not typesafe. For example, the code
+&hellip;</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+#define N_ITEMS( array ) (sizeof( array )/sizeof( *array ))
+
+void display( int const a[7] )
+{
+int const   n = N_ITEMS( a );          // Oops.
+printf( "%d elements.\n", n );
+}
+
+int main()
+{
+int const   moohaha[]   = {1, 2, 3, 4, 5, 6, 7};
+
+printf( "%d elements, calling display...\n", N_ITEMS( moohaha ) );
+display( moohaha );
+}
+</code></pre>
+
+<p>passes a pointer to <code>N_ITEMS</code>, and therefore most likely produces a wrong
+result. Compiled as a 32-bit executable in Windows 7 it produces &hellip;</p>
+
+<blockquote>
+<p>7 elements, calling display...<br>
+1 elements.</p>
+</blockquote>
+
+<ol>
+<li>The compiler rewrites <code>int const a[7]</code> to just <code>int const a[]</code>.</li>
+<li>The compiler rewrites <code>int const a[]</code> to <code>int const* a</code>.</li>
+<li><code>N_ITEMS</code> is therefore invoked with a pointer.</li>
+<li>For a 32-bit executable <code>sizeof(array)</code> (size of a pointer) is then 4.</li>
+<li><code>sizeof(*array)</code> is equivalent to <code>sizeof(int)</code>, which for a 32-bit executable is also 4.</li>
+</ol>
+
+<p>In order to detect this error at run time you can do &hellip;</p>
+
+<pre><code>#include &lt;assert.h&gt;
+#include &lt;typeinfo&gt;
+
+#define N_ITEMS( array )       (                               \
+assert((                                                    \
+    "N_ITEMS requires an actual array as argument",        \
+    typeid( array ) != typeid( &amp;*array )                    \
+    )),                                                     \
+sizeof( array )/sizeof( *array )                            \
+)
+</code></pre>
+
+<blockquote>
+<p>7 elements, calling display...<br>
+Assertion failed: ( "N_ITEMS requires an actual array as argument", typeid( a ) != typeid( &amp;*a ) ), file runtime_detect
+ion.cpp, line 16  </p>
+
+<p>This application has requested the Runtime to terminate it in an unusual way.<br>
+Please contact the application's support team for more information.  </p>
+</blockquote>
+
+<p>The runtime error detection is better than no detection, but it wastes a little
+processor time, and perhaps much more programmer time. Better with detection at
+compile time! And if you're happy to not support arrays of local types with C++98,
+then you can do that:</p>
+
+<pre><code>#include &lt;stddef.h&gt;
+
+typedef ptrdiff_t   Size;
+
+template&lt; class Type, Size n &gt;
+Size n_items( Type (&amp;)[n] ) { return n; }
+
+#define N_ITEMS( array )       n_items( array )
+</code></pre>
+
+<p>Compiling this definition substituted into the first complete program, with g++,
+I got &hellip;</p>
+
+<blockquote>
+<p>M:\count> g++ compile_time_detection.cpp<br>
+compile_time_detection.cpp: In function 'void display(const int*)':<br>
+compile_time_detection.cpp:14: error: no matching function for call to 'n_items(const int*&amp;)'  </p>
+
+<p>M:\count> _  </p>
+</blockquote>
+
+<p>How it works: the array is passed <em>by reference</em> to <code>n_items</code>, and so it does
+not decay to pointer to first element, and the function can just return the
+number of elements specified by the type.</p>
+
+<p>With C++11 you can use this also for arrays of local type, and it's the type safe
+<strong>C++ idiom</strong> for finding the number of elements of an array.</p>
+
+<h2>5.4 C++11 &amp; C++14 pitfall: Using a <code>constexpr</code> array size function.</h2>
+
+<p>With C++11 and later it's natural, but as you'll see dangerous!, to
+replace the C++03 function</p>
+
+<pre><code>typedef ptrdiff_t   Size;
+
+template&lt; class Type, Size n &gt;
+Size n_items( Type (&amp;)[n] ) { return n; }
+</code></pre>
+
+<p>with</p>
+
+<pre><code>using Size = ptrdiff_t;
+
+template&lt; class Type, Size n &gt;
+constexpr auto n_items( Type (&amp;)[n] ) -&gt; Size { return n; }
+</code></pre>
+
+<p>where the significant change is the use of <code>constexpr</code>, which allows
+this function to produce a <strong>compile time constant</strong>.</p>
+
+<p>For example, in contrast to the C++03 function, such a compile time constant
+can be used to declare an array of the same size as another:</p>
+
+<pre><code>// Example 1
+void foo()
+{
+int const x[] = {3, 1, 4, 1, 5, 9, 2, 6, 5, 4};
+constexpr Size n = n_items( x );
+int y[n] = {};
+// Using y here.
+}
+</code></pre>
+
+<p>But consider this code using the <code>constexpr</code> version:</p>
+
+<pre><code>// Example 2
+template&lt; class Collection &gt;
+void foo( Collection const&amp; c )
+{
+constexpr int n = n_items( c );     // Not in C++14!
+// Use c here
+}
+
+auto main() -&gt; int
+{
+int x[42];
+foo( x );
+}
+</code></pre>
+
+<p>The pitfall: as of July 2015 the above compiles with MinGW-64 5.1.0 with
+<code>-pedantic-errors</code>, and,
+testing with the online compilers at <a href="http://gcc.godbolt.org/" rel="noreferrer">gcc.godbolt.org/</a>, also with clang 3.0
+and clang 3.2, but not with clang 3.3, 3.4.1, 3.5.0, 3.5.1, 3.6 (rc1) or
+3.7 (experimental). And important for the Windows platform, it does not compile
+with Visual C++ 2015. The reason is a C++11/C++14 statement about use of
+references in <code>constexpr</code> expressions:</p>
+    `
+C++11 C++14 $5.19/2 nine<sup><i>th</i></sup> dash
+
+<blockquote>
+<p>A <em>conditional-expression</em> <code>e</code> is a <em>core constant expression</em> unless the evaluation
+of <code>e</code>, following the rules of the abstract machine (1.9), would evaluate one of the
+following expressions:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⋮  </p>
+
+<ul>
+<li>an <em>id-expression</em> that refers to a variable or data member of reference type
+unless the reference has a preceding initialization and either  
+
+<ul>
+<li>it is initialized with a constant expression or  </li>
+<li>it is a non-static data member of an object whose lifetime began within
+the evaluation of e;</li>
+</ul></li>
+</ul>
+</blockquote>
+
+<p>One can always write the more verbose</p>
+
+<pre><code>// Example 3  --  limited
+
+using Size = ptrdiff_t;
+
+template&lt; class Collection &gt;
+void foo( Collection const&amp; c )
+{
+constexpr Size n = std::extent&lt; decltype( c ) &gt;::value;
+// Use c here
+}
+</code></pre>
+
+<p>&hellip; but this fails when <code>Collection</code> is not a raw array.</p>
+
+<p>To deal with collections that can be non-arrays one needs the overloadability of an
+<code>n_items</code> function, but also, for compile time use one needs a compile time
+representation of the array size. And the classic C++03 solution, which works fine
+also in C++11 and C++14, is to let the function report its result not as a value
+but via its function result <em>type</em>. For example like this:</p>
+
+<pre><code>// Example 4 - OK (not ideal, but portable and safe)
+
+#include &lt;array&gt;
+#include &lt;stddef.h&gt;
+
+using Size = ptrdiff_t;
+
+template&lt; Size n &gt;
+struct Size_carrier
+{
+char sizer[n];
+};
+
+template&lt; class Type, Size n &gt;
+auto static_n_items( Type (&amp;)[n] )
+-&gt; Size_carrier&lt;n&gt;;
+// No implementation, is used only at compile time.
+
+template&lt; class Type, size_t n &gt;        // size_t for g++
+auto static_n_items( std::array&lt;Type, n&gt; const&amp; )
+-&gt; Size_carrier&lt;n&gt;;
+// No implementation, is used only at compile time.
+
+#define STATIC_N_ITEMS( c ) \
+static_cast&lt;Size&gt;( sizeof( static_n_items( c ).sizer ) )
+
+template&lt; class Collection &gt;
+void foo( Collection const&amp; c )
+{
+constexpr Size n = STATIC_N_ITEMS( c );
+// Use c here
+(void) c;
+}
+
+auto main() -&gt; int
+{
+int x[42];
+std::array&lt;int, 43&gt; y;
+foo( x );
+foo( y );
+}
+</code></pre>
+
+<p>About the choice of return type for <code>static_n_items</code>: this code doesn't use <code>std::integral_constant</code>
+because with <code>std::integral_constant</code> the result is represented
+directly as a <code>constexpr</code> value, reintroducing the original problem. Instead
+of a <code>Size_carrier</code> class one can let the function directly return a
+reference to an array. However, not everybody is familiar with that syntax.</p>
+
+<p>About the naming: part of this solution to the <code>constexpr</code>-invalid-due-to-reference
+problem is to make the choice of compile time constant explicit.</p>
+
+<p>Hopefully the oops-there-was-a-reference-involved-in-your-<code>constexpr</code> issue will be fixed with
+C++17, but until then a macro like the <code>STATIC_N_ITEMS</code> above yields portability,
+e.g. to the clang and Visual C++ compilers, retaining type safety.</p>
+
+<p>Related: macros do not respect scopes, so to avoid name collisions it can be a
+good idea to use a name prefix, e.g. <code>MYLIB_STATIC_N_ITEMS</code>.</p>
+</div>
+
+</body>
+</html>

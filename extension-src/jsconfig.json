@@ -1,0 +1,10 @@
+{
+  "exclude": [
+    "node_modules"
+  ],
+  "backgroundcolor": "purple",
+  "textcolor": "white",
+  "CSVlocation": "https://infinite-inlet-10555.herokuapp.com/",
+  "CSVLocationLocal": "extension-src\\data\\Dataset_Sample.csv"
+}
+
