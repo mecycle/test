@@ -39,6 +39,13 @@ Cons: CSV on computer may become outdated if a newer version is released
 Choosing “API" means that the backend will filter the sentences that need to be highlighted from Stack Overflow page, and the CSV will be retrieved from a web server (Heroku server for now...). 
 
 
+#### Installation Instructions (if you choose API)
+<ul>
+  <li>Go to the RESTapi-src folder and run npm install to install all dependencies</li>
+<li>Run node so-tags.js file in the RESTapi-src folder</li> 
+</ul>
+
+
 ## Description of Files
 <table>
   <tr>
@@ -79,68 +86,61 @@ After:
 Try it yourself <a href = "https://stackoverflow.com/questions/104850/test-if-string-is-a-guid-without-throwing-exceptions">here</a>!
 
 ## Deploy Heroku on local machine (for the current progress)
-For now, it is a personal account
 
-<ul>
 Install the Heroku Command Line Interface (CLI)
+<ul>
   <li>Go https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up to download CLI</li>
 </ul>
 
-<ul>
 Install nodejs, npm and git
+<ul>
   <li>Nodejs && Npm: https://nodejs.org/en/download/ </li>
   <li>Git: https://git-scm.com/downloads </li>
 </ul>
 
-<ul>
 Clone the repository from git
+<ul>
   <li>Use Git to clone infinite-inlet-10555's source code to the local machine. </li>
   <li>$ heroku git:clone -a infinite-inlet-10555</li>
   <li>$ cd infinite-inlet-10555</li>
 </ul>
 
-<ul>
 Change the server configuration
+<ul>
   <li>"index.js" is the current code of server in Heroku. It works to connect the database ----“Heroku Postgres” to fetch the data and write all of them on Heroku web page. </li>
 </ul>
 
-<ul>
 Update the git
+<ul>
   <li>After making any changes on the server side, using the following commands to update the git</li>
   <li>$ git add .</li>
   <li>$ git commit -m "My first commit"</li>
 </ul>
 
-<ul>
-Clone the repository from git
-  <li>Use Git to clone infinite-inlet-10555's source code to the local machine. </li>
-  <li>$ heroku git:clone -a infinite-inlet-10555</li>
-  <li>$ cd infinite-inlet-10555</li>
-</ul>
 
 ## Deploy “Heroku Postgres” on local machine (for the current progress)
 
-<ul>
 Install postgresql, pgAdmin is a GUI for postgresql databases
+<ul>
   <li>Go https://www.postgresql.org/download/ </li>
 </ul>
 
+Right-click the Servers, create--->server
 <ul>
-right-click the Servers, create--->server
   <img src="extension-src/documentation/Deployment/create_server.png" width="40%" height="40%">
 </ul>
 
+Connect to the Heroku
 <ul>
-connect to the Heroku
-  <img src="extension-src/documentation/Deployment/connect_to_Heroku" width="40%" height="40%">
+  <img src="extension-src/documentation/Deployment/connect_to_Heroku.png" width="40%" height="40%">
   <li>hostname/address: ec2-204-236-228-169.compute-1.amazonaws.com</li>
   <li>Port: 5432</li>
   <li>Maintenance database: d46fvet7vs95l7</li>
   <li>Username: opylmcuyrcwsmj</li>
 </ul>
 
-<ul>
 setting in "Advanced"
+<ul>
   <img src="extension-src/documentation/Deployment/Advanced.png" width="40%" height="40%">
   <li>DB restriction: d46fvet7vs95l7</li>
 </ul>
@@ -152,7 +152,7 @@ Tables in the database
   The data in Dataset_Sample.csv has been transformed into the different tables by their thread Id.
 
   Before:<img src="extension-src/documentation/Deployment/Before_csv.png" width="40%" height="40%">
-  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="40%" height="40%">
+  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="30%" height="20%">
 </ul>
 
 Data structure in each table
@@ -170,7 +170,7 @@ Data structure in each table
   <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="40%">
   <li>go back to the thread page, the selected content will be highlighted</li>
 
-  Before:<img src="extension-src/documentation/Deployment/before_highlight.png" width="40%" height="40%">
+  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="40%" height="40%">
   After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="40%" height="40%">
 </ul>
 
