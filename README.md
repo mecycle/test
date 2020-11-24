@@ -139,7 +139,7 @@ Connect to the Heroku
   <li>Username: opylmcuyrcwsmj</li>
 </ul>
 
-setting in "Advanced"
+Setting in "Advanced"
 <ul>
   <img src="extension-src/documentation/Deployment/Advanced.png" width="40%" height="40%">
   <li>DB restriction: d46fvet7vs95l7</li>
@@ -147,31 +147,31 @@ setting in "Advanced"
 
 ## The structure of “Heroku Postgres”(for now)
 
-Tables in the database
+The data in Dataset_Sample.csv has been transformed into the different tables by their thread Id.
 <ul>
-  The data in Dataset_Sample.csv has been transformed into the different tables by their thread Id.
-
   Before:<img src="extension-src/documentation/Deployment/Before_csv.png" width="40%" height="40%">
-  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="30%" height="20%">
+  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="30%" height="10%">
 </ul>
 
-Data structure in each table
+The data is stored in the following structure. 
 <ul>
-  The data is stored in the following structure. 
-  <img src="extension-src/documentation/data_structure.png" width="40%" height="40%">
+  <img src="extension-src/documentation/Deployment/data_structure.png" width="40%" height="40%">
 </ul>
 
+Example table in Postgres
+<ul>
 “example” table can be used to retrieve results from backend. But for now, it need to be manually changed. The program will keep listen on the page of this table. (https://infinite-inlet-10555.herokuapp.com/test) When the new data is inserted in this table, the corresponding page will show them automatically, also the frontend will get the data. 
+</ul>
 
-**How to use example table to highlight the sentence on stack overflow
+How to use example table to highlight the sentence on stack overflow
 <ul>
   <li>opening a new thread which is no matched table in database</li>
   <li>inserting the sentence which you want to highlight in example table, excute it</li>
-  <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="40%">
+  <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="100%">
   <li>go back to the thread page, the selected content will be highlighted</li>
 
-  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="40%" height="40%">
-  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="40%" height="40%">
+  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="40%" height="100%">
+  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="40%" height="100%">
 </ul>
 
 
