@@ -160,8 +160,10 @@ The data is stored in the following structure.
 How to use example table to highlight the sentence on stack overflow
 <ul>
   <li>opening a new thread which is no matched table in database</li>
+  
   <li>inserting the sentence which you want to highlight in example table, excute it</li>
   <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="100%">
+  
   
   <li>go back to the thread page, the selected content will be highlighted</li>
 
