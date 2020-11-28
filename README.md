@@ -165,8 +165,8 @@ How to use example table to highlight the sentence on stack overflow
   
   <li>go back to the thread page, the selected content will be highlighted</li>
 
-  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="42%" height="100">
-  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="42%" height="100">
+  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="42%" height="50">
+  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="42%" height="50">
 </ul>
 
 
