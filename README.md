@@ -39,12 +39,6 @@ Cons: CSV on computer may become outdated if a newer version is released
 Choosing “API" means that the backend will filter the sentences that need to be highlighted from Stack Overflow page, and the CSV will be retrieved from a web server (Heroku server for now...). 
 
 
-#### Installation Instructions (if you choose API)
-<ul>
-  <li>Go to the RESTapi-src folder and run npm install to install all dependencies</li>
-<li>Run node so-tags.js file in the RESTapi-src folder</li> 
-</ul>
-
 
 ## Description of Files
 <table>
