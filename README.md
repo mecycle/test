@@ -58,7 +58,7 @@ Choosing “API" means that the backend will filter the sentences that need to b
   </tr>
     <tr>
     <td>background.js</td>
-    <td>Reads Dataset_Sample.csv, and tells pageSource.js the right tags to inject and what to highlight.</td>
+    <td>In local mode, reads Dataset_Sample.csv, and tells pageSource.js the right tags to inject and what to highlight. In API mode, fetchs the data from Heroku web page, and tells pageSource.js the right tags to inject and what to highlight</td>
   </tr>
    <tr>
     <td>excludingAnswers.js</td>
