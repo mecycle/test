@@ -144,7 +144,7 @@ Setting in "Advanced"
 The data in Dataset_Sample.csv has been transformed into the different tables by their thread Id.
 <ul>
   Before:<img src="extension-src/documentation/Deployment/Before_csv.png" width="40%" height="40%">
-  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="40%" height=150>
+  In Postgres:<img src="extension-src/documentation/Deployment/After_tables.png" width="40%" height=200>
 </ul>
 
 The data is stored in the following structure. 
