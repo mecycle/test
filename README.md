@@ -152,25 +152,6 @@ The data is stored in the following structure.
   <img src="extension-src/documentation/Deployment/data_structure.png" width="50%" height="50%">
 </ul>
 
-"Example" table in Postgres
-<ul>
-“example” table can be used to retrieve results from backend. But for now, it need to be manually changed. The program will keep listen on the page of this table. (https://infinite-inlet-10555.herokuapp.com/test) When the new data is inserted in this table, the corresponding page will show them automatically, also the frontend will get the data. 
-</ul>
-
-How to use example table to highlight the sentence on stack overflow
-<ul>
-  <li>opening a new thread which is no matched table in database</li>
-  
-  <li>inserting the sentence which you want to highlight in example table, excute it. For example: </li>
-  <img src="extension-src/documentation/Deployment/insert_to_table.png" width="40%" height="100%">
-  
-  
-  <li>go back to the thread page, the selected content will be highlighted</li>
-
-  Before:<img src="extension-src/documentation/Deployment/Before_highlight.png" width="42%" height="50">
-  After:<img src="extension-src/documentation/Deployment/After_highlight.png" width="42%" height="50">
-</ul>
-
 
 ## Login to the heroku
 Go to https://dashboard.heroku.com/apps
